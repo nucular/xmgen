@@ -48,6 +48,7 @@ div()(
 
   <script src="xmgen.js"></script>
   <script src="html.js"></script>
+  <script src="svg.js"></script>
   <script>
 var input = document.getElementById("input");
 var html = document.getElementById("html");
@@ -60,9 +61,9 @@ function autogrow(element) {
 
 function update() {
   var element = new Function(
-    "with (xmgen.html) { return "
+    "with(xmgen.svg) { with (xmgen.html) { return "
     + input.value
-    + "}"
+    + "}}"
   )();
   html.value = element.toString(2);
   output.innerHTML = element.toString();

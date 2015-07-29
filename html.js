@@ -12,7 +12,7 @@
     Element: ns.xmgen.Element,
     el: ns.xmgen.Element,
 
-    DOCTYPE: ctor("!DOCTYPE"),
+    $DOCTYPE: ctor("!DOCTYPE"),
     html: ctor("html"),
 
     base: ctor("base"),

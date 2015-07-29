@@ -60,6 +60,9 @@
     var id = (indention * level > 0) ? new Array(indention * level + 1).join(" ") : "";
     var level = level || 0;
 
+    var isdoctype = this._type.match(/^\!/);
+    var isschema = this._type.match(/^\?/);
+
     var string = id + "<" + String(this._type);
     for (var k in this) {
       if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString") {
@@ -67,8 +70,8 @@
       }
     }
 
-    if (!this._type.match(/^!/)) {
-      if (this._children.length > 0)
+    if (!isdoctype) {
+      if (this._children.length > 0 || isschema)
         string += ">" + nl;
       else
         string += "/>";
@@ -87,9 +90,9 @@
       }
     }
 
-    if (this._children.length > 0 && !this._type.match(/^[?!]/))
+    if (this._children.length > 0 && !isdoctype && !isschema)
       string += nl + id + "</" + String(this._type) + ">";
-    if (this._type.match(/^!/))
+    if (isdoctype)
       string += ">";
 
     return string;
