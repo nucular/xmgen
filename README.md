@@ -1,2 +1,4 @@
-# xmgen
-A JavaScript XML generator
+xmgen
+=====
+
+A JavaScript XML generator in 100 lines

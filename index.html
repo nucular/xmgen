@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title>xmgen Example: HTML</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+#container {
+  max-width: 800px;
+  margin-left: auto; margin-right: auto;
+}
+
+#container > * {
+  margin-bottom: 10px;
+}
+
+#output {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#input, #html {
+  width: 100%;
+  height: 100px;
+  min-width: 100%;
+  max-width: 100%;
+}
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="output"></div>
+    <textarea id="html" disabled></textarea>
+    <textarea id="input">
+div()(
+  p()(
+    h1()("xmgen"),
+    i()("A JavaScript XML generator in 100 lines")
+  ),
+
+  "Check out the source on ", a({href: "https://github.com/nucular/xmgen"})("GitHub"),
+
+  h2()("Usage"),
+  pre()("TODO: Documentation I guess")
+);</textarea>
+  </div>
+
+  <script src="xmgen.js"></script>
+  <script src="html.js"></script>
+  <script>
+var input = document.getElementById("input");
+var html = document.getElementById("html");
+var output = document.getElementById("output");
+
+function autogrow(element) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight + 5) + "px";
+}
+
+function update() {
+  var element = new Function(
+    "with (xmgen.html) { return "
+    + input.value
+    + "}"
+  )();
+  html.value = element.toString(2);
+  output.innerHTML = element.toString();
+
+  autogrow(input);
+  autogrow(html);
+}
+
+input.onkeyup = update;
+update();
+  </script>
+</body>
+</html>
