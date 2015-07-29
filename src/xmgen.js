@@ -69,8 +69,10 @@
         }
       }
       if (!isdoctype) {
-        if (this._children.length > 0 || isschema)
+        if (this._children.length > 0)
           string += ">";
+        else if (isschema)
+          string += "?>"
         else
           string += "/>";
       } else {

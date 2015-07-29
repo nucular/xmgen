@@ -13,6 +13,7 @@
     el: ns.xmgen.Element,
 
     $DOCTYPE: ctor("!DOCTYPE"),
+    $xml: ctor("?xml"),
     html: ctor("html"),
 
     base: ctor("base"),

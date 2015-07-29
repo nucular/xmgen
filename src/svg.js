@@ -13,6 +13,7 @@
     el: ns.xmgen.Element,
 
     $svg: ctor("?svg"),
+    $xml: ctor("?xml"),
 
     animate: ctor("animate"),
     animateColor: ctor("animateColor"),
