@@ -22,7 +22,6 @@
       for (var i = 0; i < arguments.length; i++) {
         process(arguments[i]);
       }
-
       return self;
     }
 
@@ -51,34 +50,32 @@
       }
     }
 
-    // Callable instances: Please kill me
     self.prototype = Element.prototype;
-    for (var k in Element.prototype) {
-      if (Element.prototype.hasOwnProperty(k)) {
-        var v = Element.prototype[k];
-        if (typeof(v) == "function")
-          self[k] = v.bind(self);
-        else
-          self[k] = v;
-      }
-    }
+    self.toString = Element.prototype.toString;
     return self;
   }
 
   Element.prototype.toString = function(indention, level) {
     var nl = (indention != undefined) ? "\n" : "";
-    var id = (indention > 0 && level > 0) ? new Array(indention * level + 1).join(" ") : "";
+    var id = (indention * level > 0) ? new Array(indention * level + 1).join(" ") : "";
     var level = level || 0;
 
     var string = id + "<" + String(this._type);
     for (var k in this) {
-      if (this.hasOwnProperty(k) && !k.startsWith("_") && k != "toString") {
+      if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString") {
         string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
       }
     }
-    string += ">";
 
-    if (this._children.length) string += nl;
+    if (!this._type.match(/^!/)) {
+      if (this._children.length > 0)
+        string += ">" + nl;
+      else
+        string += "/>";
+    } else {
+      string += " ";
+    }
+
     for (var i = 0; i < this._children.length; i++) {
       var child = this._children[i];
       if (child.constructor == String) {
@@ -86,11 +83,14 @@
       } else {
         if (i > 0)
           string += nl;
-        string += id + this._children[i].toString(indention, level + 1);
+        string += this._children[i].toString(indention, level + 1);
       }
     }
-    if (this._children.length) string += nl;
-    string += id + "</" + String(this._type) + ">";
+
+    if (this._children.length > 0 && !this._type.match(/^[?!]/))
+      string += nl + id + "</" + String(this._type) + ">";
+    if (this._type.match(/^!/))
+      string += ">";
 
     return string;
   }
