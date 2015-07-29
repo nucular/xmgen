@@ -15,15 +15,15 @@ function update() {
       + "}}"
     )();
 
-    error.innerText = "";
+    error.textContent = "";
     if (toggle.classList.contains("down")) {
-      html.innerText = element.toString(2);
+      html.textContent = element.toString(2);
       CodeMirror.colorize([html], "xml");
     } else {
       render.innerHTML = element.toString();
     }
   } catch (e) {
-    error.innerText = e.toString();
+    error.textContent = e.toString();
   }
 }
 
