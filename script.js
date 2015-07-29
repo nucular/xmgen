@@ -14,15 +14,16 @@ function update() {
       + code.getValue()
       + "}}"
     )();
+
     error.innerText = "";
+    if (toggle.classList.contains("down")) {
+      html.innerText = element.toString(2);
+      CodeMirror.colorize([html], "xml");
+    } else {
+      render.innerHTML = element.toString();
+    }
   } catch (e) {
     error.innerText = e.toString();
-  }
-  if (toggle.classList.contains("down")) {
-    html.innerText = element.toString(2);
-    CodeMirror.colorize([html], "xml");
-  } else {
-    render.innerHTML = element.toString();
   }
 }
 
