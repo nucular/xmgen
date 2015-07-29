@@ -19,9 +19,8 @@
         }
       }
 
-      for (var i = 0; i < arguments.length; i++) {
+      for (var i = 0; i < arguments.length; i++)
         process(arguments[i]);
-      }
       return self;
     }
 
@@ -64,11 +63,9 @@
     var isschema = this._type.match(/^\?/);
 
     var string = id + "<" + String(this._type);
-    for (var k in this) {
-      if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString") {
+    for (var k in this)
+      if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString")
         string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
-      }
-    }
 
     if (!isdoctype) {
       if (this._children.length > 0 || isschema)
