@@ -69,7 +69,7 @@
 
     if (!isdoctype) {
       if (this._children.length > 0 || isschema)
-        string += ">" + nl;
+        string += ">";
       else
         string += "/>";
     } else {
@@ -81,14 +81,13 @@
       if (child.constructor == String) {
         string += child;
       } else {
-        if (i > 0)
-          string += nl;
-        string += this._children[i].toString(indention, level + 1);
+        string += nl + this._children[i].toString(indention, level + 1);
+        if (i == this._children.length - 1) string += nl + id;
       }
     }
 
     if (this._children.length > 0 && !isdoctype && !isschema)
-      string += nl + id + "</" + String(this._type) + ">";
+      string += "</" + String(this._type) + ">";
     if (isdoctype)
       string += ">";
 
