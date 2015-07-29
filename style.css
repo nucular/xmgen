@@ -16,9 +16,17 @@
   background-color: #ccc;
 }
 
+#error {
+  color: #f22;
+}
+
 .content {
   border: 1px solid #555;
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;
+}
+
+.CodeMirror {
+  border: 1px solid #ccc;
 }
