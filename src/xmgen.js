@@ -2,7 +2,7 @@
   ns.xmgen = ns.xmgen || {};
 
   var Element = function(type, attributes) {
-    // Element children
+    // Children
     var self = function() {
       var process = function(element) {
         if (element.prototype == Element.prototype) {
@@ -23,10 +23,8 @@
         process(arguments[i]);
       return self;
     }
-
     self._children = [];
-
-    // Element type
+    // Type
     if (typeof(type) == "function") {
       var r = type.bind(self)();
       if (r)
@@ -34,8 +32,7 @@
     } else {
       self._type = type;
     }
-
-    // Element attributes
+    // Attributes
     for (var k in attributes) {
       if (attributes.hasOwnProperty(k)) {
         var attr = attributes[k];
@@ -58,24 +55,27 @@
     var nl = (indention != undefined) ? "\n" : "";
     var id = (indention * level > 0) ? new Array(indention * level + 1).join(" ") : "";
     var level = level || 0;
+    var string = "";
 
-    var isdoctype = this._type.match(/^\!/);
-    var isschema = this._type.match(/^\?/);
+    if (this._type) {
+      var isdoctype = this._type.match(/^\!/);
+      var isschema = this._type.match(/^\?/);
+      string += id + "<" + String(this._type);
+      // Attributes
+      for (var k in this)
+        if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString")
+          string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
 
-    var string = id + "<" + String(this._type);
-    for (var k in this)
-      if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString")
-        string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
-
-    if (!isdoctype) {
-      if (this._children.length > 0 || isschema)
-        string += ">";
-      else
-        string += "/>";
-    } else {
-      string += " ";
+      if (!isdoctype) {
+        if (this._children.length > 0 || isschema)
+          string += ">";
+        else
+          string += "/>";
+      } else {
+        string += " ";
+      }
     }
-
+    // Children
     for (var i = 0; i < this._children.length; i++) {
       var child = this._children[i];
       if (child.constructor == String) {
@@ -85,12 +85,12 @@
         if (i == this._children.length - 1) string += nl + id;
       }
     }
-
-    if (this._children.length > 0 && !isdoctype && !isschema)
-      string += "</" + String(this._type) + ">";
-    if (isdoctype)
-      string += ">";
-
+    if (this._type) {
+      if (this._children.length > 0 && !isdoctype && !isschema)
+        string += "</" + String(this._type) + ">";
+      if (isdoctype)
+        string += ">";
+    }
     return string;
   }
 
