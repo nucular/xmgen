@@ -45,7 +45,6 @@
         }
       }
     }
-
     self.prototype = Element.prototype;
     self.toString = Element.prototype.toString;
     return self;
@@ -53,19 +52,22 @@
 
   Element.prototype.toString = function(indention, level) {
     var nl = (indention != undefined) ? "\n" : "";
+    var level = this._type ? (level || 0) : (level || 0)-1;
     var id = (indention * level > 0) ? new Array(indention * level + 1).join(" ") : "";
-    var level = level || 0;
     var string = "";
-
     if (this._type) {
       var isdoctype = this._type.match(/^\!/);
       var isschema = this._type.match(/^\?/);
       string += id + "<" + String(this._type);
       // Attributes
-      for (var k in this)
-        if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString")
-          string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
-
+      for (var k in this) {
+        if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString") {
+          if (this[k])
+            string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
+          else
+            string += " " + k;
+        }
+      }
       if (!isdoctype) {
         if (this._children.length > 0 || isschema)
           string += ">";
