@@ -61,10 +61,10 @@
       string += id + "<" + String(this._type);
       // Attributes
       for (var k in this) {
-        if (this.hasOwnProperty(k) && !k.match(/^_/) && k != "toString") {
-          if (this[k])
+        if (this.hasOwnProperty(k) && !this.prototype.hasOwnProperty(k) && !k.match(/^_/)) {
+          if (this[k] != undefined)
             string += " " + k + "=\"" + String(this[k]).replace(/"/g, "&quot;") + "\"";
-          else
+          else if (this[k] == null)
             string += " " + k;
         }
       }
