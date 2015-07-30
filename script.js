@@ -10,7 +10,7 @@ var code = CodeMirror.fromTextArea(document.getElementById("code"), {
 function update() {
   try {
     var element = new Function(
-      "with(xmgen.svg) { with (xmgen.html) { return "
+      "with(xmgen.svg) { with (xmgen.html) {"
       + code.getValue()
       + "}}"
     )();
@@ -21,6 +21,7 @@ function update() {
       CodeMirror.colorize([html], "xml");
     } else {
       render.innerHTML = element.toString();
+      CodeMirror.colorize(render.getElementsByTagName("pre"));
     }
   } catch (e) {
     error.textContent = e.toString();

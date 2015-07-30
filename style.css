@@ -16,6 +16,10 @@
   background-color: #ccc;
 }
 
+#html {
+  white-space: pre-wrap;
+}
+
 #error {
   color: #f22;
 }
