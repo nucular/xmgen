@@ -1,3 +1,22 @@
+html, body {
+  font-family: "Roboto", sans-serif;
+}
+
+a {
+  cursor: pointer;
+  color: #0070bb;
+  text-decoration: none;
+}
+a[disabled] {
+  cursor: default;
+  pointer-events: none;
+  color: #555;
+}
+a:hover {
+  color: #035;
+}
+
+
 #container {
   max-width: 800px;
   margin-left: auto; margin-right: auto;
@@ -7,7 +26,9 @@
   font-weight: bold;
   float: right;
   cursor: pointer;
-  padding-left: 5px; padding-right: 5px;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid #ccc; border-top: none; border-right: none;
+  border-bottom-left-radius: 2px;
 }
 #toggle:hover {
   background-color: #eee;
@@ -16,22 +37,24 @@
   background-color: #ccc;
 }
 
-#html {
+.card-content pre {
+  margin: 0px;
   white-space: pre-wrap;
 }
 
-#error {
-  color: #f22;
-}
-
-.content {
-  border: 1px solid #555;
-  padding: 10px;
+.card {
+  border: 1px solid #ccc;
+  padding: 0px;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.14),
+    0 2px 2px 0 rgba(0,0,0,.098),
+    0 1px 5px 0 rgba(0,0,0,.084);
+  border-radius: 2px;
 }
 
-.CodeMirror {
-  border: 1px solid #ccc;
+.card-content {
+  overflow: auto;
+  padding: 16px;
 }

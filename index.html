@@ -5,17 +5,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.5.0/codemirror.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="container">
-    <div id="output" class="content">
+    <div id="output" class="card">
       <span id="toggle">&lt;&nbsp;&gt;</span>
-      <div id="render"></div>
-      <pre id="html"></pre>
+      <div class="card-content">
+        <div id="render"></div>
+        <pre id="html"></pre>
+      </div>
     </div>
-    <div class="content">
+    <div class="card">
       <textarea id="code">
 return div()(
   svg({width: 100, height: 100})(
@@ -168,9 +171,8 @@ return div()(
   )
 );
 </textarea>
-      <br/>
-      <span id="error"></span>
     </div>
+    <span id="status"></span>
   </div>
 
 
