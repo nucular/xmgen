@@ -1,10 +1,10 @@
-(function() {
-  var html = document.getElementById("html");
-  var render = document.getElementById("render");
-  var toggle = document.getElementById("toggle");
-  var status = document.getElementById("status");
+$(function() {
+  var $html = $("#html");
+  var $render = $("#render");
+  var $toggle = $("#toggle");
+  var $status = $("#status");
 
-  var code = CodeMirror.fromTextArea(document.getElementById("code"), {
+  var code = CodeMirror.fromTextArea($("#code")[0], {
     mode: "javascript",
     lineNumbers: true
   });
@@ -29,51 +29,53 @@
   function update() {
     try {
       var element = new Function(
-        "with(xmgen.svg) { with (xmgen.html) {"
+        "with(xmgen.svg) with (xmgen.html) {"
         + code.getValue()
-        + "}}"
+        + "}"
       )();
 
-      if (toggle.classList.contains("down")) {
+      if ($toggle.hasClass("down")) {
         var t1 = now();
         var xml = element.toString(2);
         t1 = Math.floor(now() - t1);
         var t2 = now();
-        html.textContent = xml;
+        $html.text(xml);
         t2 = Math.floor(now() - t2);
-        status.textContent = "Generated "
-          + count(element) + " elements in " + t1
-          + " ms, appended to DOM in " + t2 + " ms";
-        CodeMirror.colorize([html], "xml");
+        $status.text(
+          "Generated " + count(element) + " elements in " + t1
+          + " ms, appended to DOM in " + t2 + " ms"
+        );
+        CodeMirror.colorize([$html[0]], "xml");
       } else {
         var t1 = now();
-        var xml = element.toString(1);
+        var xml = element.toString();
         t1 = Math.floor(now() - t1);
         var t2 = now();
-        render.innerHTML = xml;
+        $render.html(xml);
         t2 = Math.floor(now() - t2);
-        status.textContent = "Generated "
-          + count(element) + " elements in " + t1
-          + " ms, appended to DOM in " + t2 + " ms";
-        CodeMirror.colorize(render.getElementsByTagName("pre"));
+        $status.text(
+          "Generated " + count(element) + " elements in " + t1
+          + " ms, appended to DOM in " + t2 + " ms"
+        );
+        CodeMirror.colorize($render.find("pre"));
       }
-      status.style.color = null;
+      $status.css("color", null);
     } catch (e) {
-      status.textContent = e.toString();
-      status.style.color = "#f22";
+      $status.text(e.toString());
+      $status.css("color", "#f22");
     }
   }
 
   code.on("change", update);
-  toggle.addEventListener("click", function() {
-    if (toggle.classList.contains("down")) {
-      toggle.classList.remove("down");
-      html.innerHTML = "";
+  $toggle.on("click", function() {
+    if (toggle.hasClass("down")) {
+      toggle.removeClass("down");
+      $html.html("");
     } else {
-      toggle.classList.add("down");
-      render.innerHTML = "";
+      toggle.addClass("down");
+      $render.html("");
     }
     update();
   });
   update();
-})();
+});
