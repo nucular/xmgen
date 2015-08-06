@@ -59,7 +59,7 @@ $(function() {
         );
         CodeMirror.colorize($render.find("pre"));
       }
-      $status.css("color", null);
+      $status.css("color", "#000");
     } catch (e) {
       $status.text(e.toString());
       $status.css("color", "#f22");
@@ -68,11 +68,11 @@ $(function() {
 
   code.on("change", update);
   $toggle.on("click", function() {
-    if (toggle.hasClass("down")) {
-      toggle.removeClass("down");
+    if ($toggle.hasClass("down")) {
+      $toggle.removeClass("down");
       $html.html("");
     } else {
-      toggle.addClass("down");
+      $toggle.addClass("down");
       $render.html("");
     }
     update();
