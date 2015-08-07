@@ -1,4 +1,5 @@
 $(function() {
+  var $demos = $("#demos");
   var $html = $("#html");
   var $render = $("#render");
   var $toggle = $("#toggle");
@@ -8,6 +9,7 @@ $(function() {
     mode: "javascript",
     lineNumbers: true
   });
+  var lastHash = "";
 
   function now() {
     if (window.performance)
@@ -16,14 +18,37 @@ $(function() {
       return new Date();
   }
 
-  function count(el) {
+  function countNodes(el) {
     var c = 1;
     if (el._children) {    
       for (var i = 0; i < el._children.length; i++) {
-        c += count(el._children[i]);
+        c += countNodes(el._children[i]);
       }
     }
     return c;
+  }
+
+  function loadDemo(name) {
+    $("#demos > .on").removeClass("on");
+    return $.get(
+      "demos/" + xmgen.demos[name],
+      null,
+      function(data) {
+        $("a[href=\"#" + encodeURIComponent(name) + "\"]").addClass("on");
+        code.setValue(data);
+      },
+      "text"
+    )
+  }
+
+  function checkHash() {
+    var hash = decodeURIComponent(window.location.hash.substr(1));
+    if (hash != lastHash) {
+      loadDemo(hash);
+      lastHash = hash;
+      return true;
+    }
+    return false;
   }
 
   function update() {
@@ -34,7 +59,7 @@ $(function() {
         + "}"
       )();
 
-      if ($toggle.hasClass("down")) {
+      if ($toggle.hasClass("on")) {
         var t1 = now();
         var xml = element.toString(2);
         t1 = Math.floor(now() - t1);
@@ -42,7 +67,7 @@ $(function() {
         $html.text(xml);
         t2 = Math.floor(now() - t2);
         $status.text(
-          "Generated " + count(element) + " elements in " + t1
+          "Generated " + countNodes(element) + " elements in " + t1
           + " ms, appended to DOM in " + t2 + " ms"
         );
         CodeMirror.colorize([$html[0]], "xml");
@@ -54,7 +79,7 @@ $(function() {
         $render.html(xml);
         t2 = Math.floor(now() - t2);
         $status.text(
-          "Generated " + count(element) + " elements in " + t1
+          "Generated " + countNodes(element) + " elements in " + t1
           + " ms, appended to DOM in " + t2 + " ms"
         );
         CodeMirror.colorize($render.find("pre"));
@@ -67,15 +92,31 @@ $(function() {
   }
 
   code.on("change", update);
-  $toggle.on("click", function() {
-    if ($toggle.hasClass("down")) {
-      $toggle.removeClass("down");
-      $html.html("");
-    } else {
-      $toggle.addClass("down");
-      $render.html("");
-    }
-    update();
+  $(".button.toggle").on("click", function() {
+    if ($(this).hasClass("on"))
+      $(this).removeClass("on");
+    else
+      $(this).addClass("on");
   });
-  update();
+  $toggle.on("click", function() {
+    if ($toggle.hasClass("on"))
+      $render.html("");
+    else
+      $html.html("");
+    update();
+  })
+
+  for (var i in xmgen.demos) {
+    if (xmgen.demos.hasOwnProperty(i)) {
+      $demos.append(
+        $("<a class=\"flat button\">")
+          .attr("href", "#" + encodeURIComponent(i))
+          .text(i)
+      );
+    }
+  }
+  
+  if (!checkHash())
+    loadDemo("Documentation");
+  setInterval(checkHash, 100);
 });

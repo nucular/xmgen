@@ -1,5 +1,7 @@
 html, body {
   font-family: "Roboto", sans-serif;
+  color: rgba(0,0,0,.87);
+  background-color: #f7f7f7;
 }
 
 a {
@@ -16,37 +18,102 @@ a:hover {
   color: #035;
 }
 
+hr {
+  display: block;
+  border: none;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgba(0,0,0,0.12);
+  margin: 0;
+}
+
 
 #container {
   max-width: 800px;
   margin-left: auto; margin-right: auto;
 }
 
-#toggle {
+.button {
+  box-sizing: border-box;
+  user-select: none;
+  display: inline-table;
+  padding: 0 6px;
+  margin: 6px 8px;
+  line-height: 36px;
+  min-height: 36px;
+  min-width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
   font-weight: bold;
-  float: right;
+  font-size: 14px;
+  text-decoration: none;
   cursor: pointer;
-  padding: 5px 10px 5px 10px;
-  border: 1px solid #ccc; border-top: none; border-right: none;
-  border-bottom-left-radius: 2px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),
+    background-color .4s cubic-bezier(.25,.8,.25,1);
+  border-radius: 3px;
+  background-color: #fff;
 }
-#toggle:hover {
-  background-color: #eee;
+.button:hover {
+  background-color: #ddd;
 }
-#toggle.down {
-  background-color: #ccc;
+.button:active {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+}
+.button.fab {
+  z-index: 20;
+  line-height: 56px;
+  min-width: 0;
+  width: 56px;
+  height: 56px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-clip: padding-box;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.button.flat {
+  box-shadow: none;
+}
+.button.on {
+  color: rgba(255,255,255,0.87);
+  background-color: #0070bb;
+}
+.button.on:hover {
+  background-color: rgb(8,100,180);
+}
+
+.group:not(.inset) {
+  margin: 6px 8px;
+}
+.group > .button {
+  margin: 0px;
+  border-radius: 0px;
+}
+.group > .button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.group > .button:last-child  {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .card-content pre {
+  padding: 16px;
   margin: 0px;
   white-space: pre-wrap;
 }
 
 .card {
-  border: 1px solid #ccc;
+  position: relative;
   padding: 0px;
   margin-bottom: 10px;
   width: 100%;
+  background-color: #fff;
   box-sizing: border-box;
   box-shadow: 0 3px 1px -2px rgba(0,0,0,.14),
     0 2px 2px 0 rgba(0,0,0,.098),
