@@ -54,7 +54,7 @@ $(function() {
   function update() {
     try {
       var element = new Function(
-        "with(xmgen.svg) with (xmgen.html) {"
+        "with(xmgen.svg()) with (xmgen.html()) {"
         + code.getValue()
         + "}"
       )();

@@ -126,7 +126,7 @@ return div()(
   h2()("html.js and svg.js"),
   pre({"data-lang": "javascript"})(
     "var doc;\n",
-    "with (xmgen.html) {\n",
+    "with (xmgen.html()) {\n",
     "  doc = el()(\n",
     "    p()(\n",
     "      h1()(\"xmgen\"),\n",
@@ -143,7 +143,8 @@ return div()(
   p()(
     "These extension modules (that should be loaded after xmgen.js) define ",
     "constructor functions for the basic elements used in the respective XML-based ",
-    "markup language."
+    "markup language. They implement functions that return an ",
+    code()("Object"), " to be used with the ", code()("with"), " keyword."
   ),
   p()(
     "Doctypes and schema tags are prefixed with a $ (", code()("$DOCTYPE, $svg"),
