@@ -1,0 +1,25 @@
+{
+  "name": "xmgen",
+  "version": "0.0.1",
+  "description": "A JavaScript XML generator in ~100 lines",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nucular/xmgen.git"
+  },
+  "keywords": [
+    "xml",
+    "generator",
+    "svg",
+    "html"
+  ],
+  "author": "nucular",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nucular/xmgen/issues"
+  },
+  "homepage": "https://nucular.github.io/xmgen"
+}

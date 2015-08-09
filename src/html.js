@@ -1,17 +1,21 @@
-(function(ns) {
-  ns.xmgen = ns.xmgen || {};
+(function() {
+  var isCJS = typeof module !== "undefined" && module.exports;
+  if (isCJS)
+    var Element = require("xmgen/xmgen");
+  else if (window.xmgen)
+    var Element = window.xmgen.Element;
 
   function ctor(type) {
     return function(attributes) {
-      return new ns.xmgen.Element(type, attributes);
+      return new Element(type, attributes);
     }
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-  ns.xmgen.html = function() {
+  var html = function() {
     return {
-      Element: ns.xmgen.Element,
-      el: ns.xmgen.Element,
+      Element: Element,
+      el: Element,
 
       $DOCTYPE: ctor("!DOCTYPE"),
       $xml: ctor("?xml"),
@@ -138,4 +142,9 @@
       menu: ctor("menu")
     }
   };
-})(window);
+
+  if (isCJS)
+    module.exports = html;
+  else
+    window.xmgen.html = html;
+})();

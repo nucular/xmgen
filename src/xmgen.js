@@ -1,5 +1,5 @@
-(function(ns) {
-  ns.xmgen = ns.xmgen || {};
+(function() {
+  var isCJS = typeof module !== "undefined" && module.exports;
 
   var Element = function(type, attributes) {
     // Children
@@ -95,5 +95,8 @@
     }
     return self;
   }
-  ns.xmgen.Element = Element;
-})(window);
+  if (isCJS)
+    module.exports = Element;
+  else
+    window.xmgen = {Element};
+})();

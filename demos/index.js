@@ -1,9 +1,12 @@
-(function(ns) {
-  ns.xmgen = ns.xmgen || {};
-
-  ns.xmgen.demos = {
+(function() {
+  var isCJS = typeof module !== "undefined" && module.exports;
+  var demos = {
     "Documentation": "docs.js",
     "SVG Logo": "svglogo.js",
     "Spirograph": "spirograph.js"
   }
-})(window);
+  if (isCJS)
+    module.exports = demos;
+  else
+    window.xmgen.demos = demos;
+})();

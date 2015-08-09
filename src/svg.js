@@ -1,17 +1,21 @@
 (function(ns) {
-  ns.xmgen = ns.xmgen || {};
+  var isCJS = typeof module !== "undefined" && module.exports;
+  if (isCJS)
+    var Element = require("xmgen/xmgen");
+  else if (window.xmgen)
+    var Element = window.xmgen.Element;
 
   function ctor(type) {
     return function(attributes) {
-      return new ns.xmgen.Element(type, attributes);
+      return new Element(type, attributes);
     }
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/SVG/Element
-  ns.xmgen.svg = function() {
+  var svg = function() {
     return {
-      Element: ns.xmgen.Element,
-      el: ns.xmgen.Element,
+      Element: Element,
+      el: Element,
 
       $svg: ctor("?svg"),
       $xml: ctor("?xml"),
@@ -108,4 +112,9 @@
       view: ctor("view")
     }
   }
-})(window);
+
+  if (isCJS)
+    module.exports = svg;
+  else
+    window.xmgen.svg = svg;
+})();
